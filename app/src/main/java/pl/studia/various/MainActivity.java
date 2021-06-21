@@ -17,9 +17,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    ListView listView;
-    private ArrayList<Lista> data;
-    private ArrayAdapter<Lista> adapter;
+
 
     Button buttonA, buttonB;
 
@@ -45,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 //        listView.setAdapter(adapter);
 //        /////////////////////////////////////////////////
 
+        // Fragments
         buttonA = findViewById(R.id.MainABtn);
         buttonB = findViewById(R.id.MainBBtn);
 
