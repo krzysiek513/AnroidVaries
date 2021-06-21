@@ -15,15 +15,17 @@ import java.util.ArrayList;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
 
     private ArrayList<Lista> data;
+    private OnListener onListener;
 
-    public RecyclerAdapter(ArrayList<Lista> data) {
+    public RecyclerAdapter(ArrayList<Lista> data, OnListener onListener) {
         this.data = data;
+        this.onListener = onListener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, onListener);
     }
 
     @Override
@@ -35,7 +37,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "cicked " + data.get(position).getNameId(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(v.getContext(), "cicked " + data.get(position).getNameId(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -45,19 +47,32 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return data.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         ImageView image;
         TextView name;
         TextView opis;
+        OnListener onListener;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, OnListener onListener) {
             super(itemView);
 
             image = itemView.findViewById(R.id.recIv);
             name = itemView.findViewById(R.id.recTv1);
             opis = itemView.findViewById(R.id.recTv2);
+
+            this.onListener = onListener;
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            onListener.onListener(getAbsoluteAdapterPosition());
+        }
+    }
+
+    public interface OnListener{
+        void onListener(int position);
     }
 
 }

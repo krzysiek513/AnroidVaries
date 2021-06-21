@@ -13,12 +13,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 
-public class FragmentB extends Fragment {
+public class FragmentB extends Fragment implements RecyclerAdapter.OnListener {
 
     RecyclerView recyclerView;
     ArrayList<Lista> data = new ArrayList<>();
@@ -50,9 +51,15 @@ public class FragmentB extends Fragment {
 
         data.add(new Lista(R.drawable.cos, "cos", "dafdsfdf"));
 
-        adapter = new RecyclerAdapter(data);
+        adapter = new RecyclerAdapter(data, this);
         recyclerView.setAdapter(adapter);
 
         return view;
+    }
+
+    @Override
+    public void onListener(int position) {
+        data.get(position);
+        Toast.makeText(getContext(), "cicked fragment", Toast.LENGTH_LONG).show();
     }
 }
