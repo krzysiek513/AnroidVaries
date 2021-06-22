@@ -27,7 +27,7 @@ public class FragmentB extends Fragment implements RecyclerAdapter.OnListener {
     RecyclerView.LayoutManager layoutManager;
 
     View view;
-    Button fragmentBtn;
+    Button fragmentBtn, showBtn;
     EditText editText;
 
     @Override
@@ -48,6 +48,13 @@ public class FragmentB extends Fragment implements RecyclerAdapter.OnListener {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(layoutManager);
+        showBtn = view.findViewById(R.id.fragmentBShowBtn);
+        showBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showItems();
+            }
+        });
 
         data.add(new Lista(R.drawable.cos, "cos", "dafdsfdf"));
 
@@ -60,6 +67,9 @@ public class FragmentB extends Fragment implements RecyclerAdapter.OnListener {
     @Override
     public void onListener(int position) {
         data.get(position);
-        Toast.makeText(getContext(), "cicked fragment", Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "cicked item", Toast.LENGTH_LONG).show();
     }
+
+    public void showItems(){
+   }
 }

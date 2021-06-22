@@ -99,7 +99,7 @@ public class FragmentA extends Fragment {
             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                    double progress = ( 100.0 * snapshot.getBytesTransferred()) / snapshot.getBytesTransferred();
+                    double progress = ( 100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
                     progressDialog.setMessage(((int) progress) + "% Uploaded...");
                 }
             });
