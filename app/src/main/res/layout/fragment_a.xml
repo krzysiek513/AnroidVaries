@@ -34,4 +34,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragmentAEt"/>
 
+    <Button
+        android:id="@+id/fragmentAChoseBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="chose"
+        app:layout_constraintEnd_toStartOf="@+id/fragmentAUploadBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentABtn"/>
+
+    <Button
+        android:id="@+id/fragmentAUploadBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="upload"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fragmentAChoseBtn"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentABtn"/>
+
+    <ImageView
+        android:id="@+id/imageViewStorage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentAUploadBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
