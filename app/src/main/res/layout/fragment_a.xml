@@ -24,6 +24,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragmentATv"/>
+
+    <EditText
+        android:id="@+id/fragmentA2Et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentAEt"/>
     <Button
         android:id="@+id/fragmentABtn"
         android:layout_width="wrap_content"
@@ -32,7 +41,7 @@
         android:text="fragment A"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentAEt"/>
+        app:layout_constraintTop_toBottomOf="@+id/fragmentA2Et"/>
 
     <Button
         android:id="@+id/fragmentAChoseBtn"

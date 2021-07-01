@@ -19,8 +19,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -38,20 +42,28 @@ public class FragmentA extends Fragment {
     View view;
     Button fragmentBtn, choseBtn, uploadBtn;
     ImageView imageView;
-    EditText editText;
+    EditText editText, editText2;
     private Uri image_uri;
     private StorageReference storageRef;
+
+
+    FirebaseDatabase mDatabase;
+    DatabaseReference dataRef;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+        mDatabase = FirebaseDatabase.getInstance();
+        dataRef = mDatabase.getReference().child("varies");
+
         storageRef = FirebaseStorage.getInstance().getReference();
 
         view = inflater.inflate(R.layout.fragment_a, container, false);
         fragmentBtn  = view.findViewById(R.id.fragmentABtn);
         editText = view.findViewById(R.id.fragmentAEt);
+        editText2 = view.findViewById(R.id.fragmentA2Et);
         imageView = view.findViewById(R.id.imageViewStorage);
         fragmentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,14 +94,30 @@ public class FragmentA extends Fragment {
             final ProgressDialog progressDialog = new ProgressDialog(getContext());
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
+
             String name = editText.getText().toString().trim();
-            StorageReference imagesRef = storageRef.child("images/" + name + ".jpg");
+            String description = editText2.getText().toString().trim();
+
+            StorageReference imagesRef = storageRef.child("variesImg/" + name + ".jpg");
 
             imagesRef.putFile(image_uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    progressDialog.dismiss();
+
                     Toast.makeText(getContext(), "Image uploaded", Toast.LENGTH_LONG).show();
+                    Task<Uri> downloaderUrl = taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            String t = task.getResult().toString();
+
+                            DatabaseReference newPost = dataRef.push();
+
+                            newPost.child("name").setValue(name);
+                            newPost.child("description").setValue(description);
+                            newPost.child("image").setValue(task.getResult().toString());
+                            progressDialog.dismiss();
+                        }
+                    });
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

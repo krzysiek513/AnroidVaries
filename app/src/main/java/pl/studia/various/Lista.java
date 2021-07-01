@@ -12,9 +12,7 @@ public class Lista {
         this.opisId = opisId;
     }
 
-    public Lista(int listNameId, String nameId) {
-        this.listSrcId = listNameId;
-        this.nameId = nameId;
+    public Lista() {
     }
 
     public int getListNameId() {
