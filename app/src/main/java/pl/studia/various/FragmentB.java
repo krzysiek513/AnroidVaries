@@ -2,6 +2,8 @@ package pl.studia.various;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,16 +17,31 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
-public class FragmentB extends Fragment implements RecyclerAdapter.OnListener {
+public class FragmentB extends Fragment {
 
     RecyclerView recyclerView;
-    ArrayList<Lista> data = new ArrayList<>();
     RecyclerAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
+
+    List<Lista> listaList;
+
+    FirebaseDatabase mDatabase;
+    DatabaseReference dataRef;
+    StorageReference storageRef;
+    FirebaseStorage mStorage;
 
     View view;
     Button fragmentBtn, showBtn;
@@ -37,6 +54,12 @@ public class FragmentB extends Fragment implements RecyclerAdapter.OnListener {
         view = inflater.inflate(R.layout.fragment_b, container, false);
         fragmentBtn  = view.findViewById(R.id.fragmentBBtn);
         editText = view.findViewById(R.id.fragmentBEt);
+
+        mDatabase = FirebaseDatabase.getInstance();
+        dataRef = mDatabase.getReference().child("varies");
+        storageRef = FirebaseStorage.getInstance().getReference();
+        mStorage = FirebaseStorage.getInstance();
+
         fragmentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,6 +71,11 @@ public class FragmentB extends Fragment implements RecyclerAdapter.OnListener {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(layoutManager);
+
+        listaList = new ArrayList<Lista>();
+        adapter = new RecyclerAdapter(view.getContext(), listaList);
+        recyclerView.setAdapter(adapter);
+
         showBtn = view.findViewById(R.id.fragmentBShowBtn);
         showBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,20 +84,68 @@ public class FragmentB extends Fragment implements RecyclerAdapter.OnListener {
             }
         });
 
-        data.add(new Lista(R.drawable.cos, "cos", "dafdsfdf"));
 
-        adapter = new RecyclerAdapter(data, this);
-        recyclerView.setAdapter(adapter);
+        dataRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Lista item = snapshot.getValue(Lista.class);
+                listaList.add(item);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         return view;
     }
 
-    @Override
-    public void onListener(int position) {
-        data.get(position);
-        Toast.makeText(getContext(), "cicked item", Toast.LENGTH_LONG).show();
-    }
-
     public void showItems(){
-   }
+        dataRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Lista item = snapshot.getValue(Lista.class);
+                listaList.add(item);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
 }

@@ -1,12 +1,12 @@
 package pl.studia.various;
 
 public class Lista {
-    private int listSrcId;
+    private String listSrcId;
     private String nameId;
     private String opisId;
 
 
-    public Lista(int listNameId, String nameId, String opisId) {
+    public Lista(String listNameId, String nameId, String opisId) {
         this.listSrcId = listNameId;
         this.nameId = nameId;
         this.opisId = opisId;
@@ -15,11 +15,11 @@ public class Lista {
     public Lista() {
     }
 
-    public int getListNameId() {
+    public String getListNameId() {
         return listSrcId;
     }
 
-    public void setListNameId(int listNameId) {
+    public void setListNameId(String listNameId) {
         this.listSrcId = listNameId;
     }
 

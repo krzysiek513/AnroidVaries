@@ -47,7 +47,7 @@ public class ListaTrzyAdapter extends ArrayAdapter<Lista> {
         }
 
         Lista list = data.get(position);
-        holder.image.setImageResource(list.getListNameId());
+//        holder.image.setImageResource(list.getListNameId());
         holder.name.setText(list.getNameId());
         holder.opis.setText(list.getOpisId());
 
