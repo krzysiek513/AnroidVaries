@@ -11,12 +11,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ListaTrzyAdapter extends ArrayAdapter<Lista> {
+public class ListaTrzyAdapter extends ArrayAdapter<varies> {
 
-    private ArrayList<Lista> data;
+    private ArrayList<varies> data;
     private Context context;
 
-    public ListaTrzyAdapter(Context context, ArrayList<Lista> data) {
+    public ListaTrzyAdapter(Context context, ArrayList<varies> data) {
         super(context, R.layout.list);
         this.data = data;
         this.context = context;
@@ -46,9 +46,9 @@ public class ListaTrzyAdapter extends ArrayAdapter<Lista> {
             holder = (ListHolder) row.getTag();
         }
 
-        Lista list = data.get(position);
+        varies list = data.get(position);
 //        holder.image.setImageResource(list.getListNameId());
-        holder.name.setText(list.getNameId());
+        holder.name.setText(list.getNaame());
         holder.opis.setText(list.getOpisId());
 
         return row;

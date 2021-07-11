@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
@@ -43,12 +42,27 @@ public class FragmentA extends Fragment {
     Button fragmentBtn, choseBtn, uploadBtn;
     ImageView imageView;
     EditText editText, editText2;
-    private Uri image_uri;
-    private StorageReference storageRef;
+    private Uri imageUri = null;
 
+    StorageReference storageRef;
+
+    FirebaseStorage mStorage = FirebaseStorage.getInstance();
 
     FirebaseDatabase mDatabase;
     DatabaseReference dataRef;
+
+    /////////////////////////
+//    StorageReference spaceRef = storageRef.child("images/space.jpg");
+//    StorageReference imagesRef = storageRef.child("images");
+
+// getParent allows us to move our reference to a parent node
+// imagesRef now points to 'images'
+//    imagesRef = spaceRef.getParent();
+
+    // getRoot allows us to move all the way back to the top of our bucket
+// rootRef now points to the root
+//    StorageReference rootRef = spaceRef.getRoot();
+    //////////////////
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -89,7 +103,7 @@ public class FragmentA extends Fragment {
     }
 
     private void uploadFile() {
-        if(image_uri != null){
+        if(imageUri != null ){
 
             final ProgressDialog progressDialog = new ProgressDialog(getContext());
             progressDialog.setTitle("Uploading...");
@@ -98,9 +112,10 @@ public class FragmentA extends Fragment {
             String name = editText.getText().toString().trim();
             String description = editText2.getText().toString().trim();
 
-            StorageReference imagesRef = storageRef.child("variesImg/" + name + ".jpg");
+            StorageReference imagesRef = storageRef.child("variesImg/").child(imageUri.getLastPathSegment());
+                    //storageRef.child("variesImg/" + name + ".jpg");
 
-            imagesRef.putFile(image_uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            imagesRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
@@ -131,7 +146,8 @@ public class FragmentA extends Fragment {
                     progressDialog.setMessage(((int) progress) + "% Uploaded...");
                 }
             });
-        } else { //display toast
+        } else {
+            Toast.makeText(getContext(), "Image uploaded", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -149,9 +165,9 @@ public class FragmentA extends Fragment {
 
         if(resultCode == RESULT_OK && data != null && data.getData() != null){
             if (requestCode == PICK_IMAGE_REQUEST){
-                image_uri = data.getData();
+                imageUri = data.getData();
                 try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), image_uri);
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageUri);
                     imageView.setImageBitmap(bitmap);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -160,7 +176,7 @@ public class FragmentA extends Fragment {
 
             }
             else if (requestCode == PICK_CAMERA_REQUEST){
-                imageView.setImageURI(image_uri);
+                imageView.setImageURI(imageUri);
 
             }
         }

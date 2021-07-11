@@ -6,23 +6,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
 
 
     Context context;
-    List<Lista> itemList;
+    List<varies> itemList;
 
-    public RecyclerAdapter(Context context, List<Lista> itemList) {
+    public RecyclerAdapter(Context context, List<varies> itemList) {
         this.context = context;
         this.itemList = itemList;
     }
@@ -36,8 +34,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdapter.ViewHolder holder, int position) {
 
-        Lista itemModel = itemList.get(position);
-        holder.name.setText("name" + itemModel.getNameId());
+        varies itemModel = itemList.get(position);
+        holder.name.setText("name" + itemModel.getNaame());
         holder.opis.setText("description" + itemModel.getOpisId());
 
         String imageUrl = null;

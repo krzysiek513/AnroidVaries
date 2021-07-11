@@ -11,11 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -26,7 +23,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -36,7 +32,7 @@ public class FragmentB extends Fragment {
     RecyclerAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
 
-    List<Lista> listaList;
+    List<varies> variesList;
 
     FirebaseDatabase mDatabase;
     DatabaseReference dataRef;
@@ -72,8 +68,8 @@ public class FragmentB extends Fragment {
         layoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        listaList = new ArrayList<Lista>();
-        adapter = new RecyclerAdapter(view.getContext(), listaList);
+        variesList = new ArrayList<varies>();
+        adapter = new RecyclerAdapter(view.getContext(), variesList);
         recyclerView.setAdapter(adapter);
 
         showBtn = view.findViewById(R.id.fragmentBShowBtn);
@@ -88,8 +84,8 @@ public class FragmentB extends Fragment {
         dataRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Lista item = snapshot.getValue(Lista.class);
-                listaList.add(item);
+                varies item = snapshot.getValue(varies.class);
+                variesList.add(item);
                 adapter.notifyDataSetChanged();
             }
 
@@ -121,8 +117,8 @@ public class FragmentB extends Fragment {
         dataRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Lista item = snapshot.getValue(Lista.class);
-                listaList.add(item);
+                varies item = snapshot.getValue(varies.class);
+                variesList.add(item);
                 adapter.notifyDataSetChanged();
             }
 
